@@ -1,0 +1,4 @@
+sudo fdisk -l
+sudo apt install nfs-common
+sudo apt install cifs-utils
+sudo ntfsfix -d /dev/sdx1 (sdx segun muestre el fdisk)
