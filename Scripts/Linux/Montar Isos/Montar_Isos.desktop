@@ -1,0 +1,18 @@
+[Desktop Entry]
+Categories=Utility;
+Comment[es_MX]=Montar archivos ISO con Zenity
+Comment=Montar archivos ISO con Zenity
+Exec='/home/handerson/Scripts/Montar_Isos.sh'
+GenericName[es_MX]=
+GenericName=
+Icon=media-optical
+MimeType=
+Name[es_MX]=Montar ISOs
+Name=Montar ISOs
+Path=
+StartupNotify=true
+Terminal=true
+TerminalOptions=
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
