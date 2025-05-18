@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=Nombre del Programa
+Exec=wine "/ruta/al/archivo.exe"
+Type=Application
+StartupNotify=true
+Path=/ruta/al/directorio/del/programa
+Icon=/ruta/a/un/icono.png
+Categories=Utility;Application;
