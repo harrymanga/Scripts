@@ -38,6 +38,13 @@ for input in "${files[@]}"; do
     "CHD a ISO")
       if [[ "$ext" == "chd" ]]; then
         chdman extractcd -i "$input" -o "${base}.iso" --force
+        if [[ -f "${base}.bin" ]]; then
+          rm -f "${base}.iso"
+          mv "${base}.bin" "${base}.iso"
+          echo "Generado: ${base}.iso"
+        else
+          echo "Error: ${base}.bin no encontrado"
+        fi
       fi
       ;;
     "CUE a CHD")
