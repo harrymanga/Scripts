@@ -69,6 +69,6 @@ sincronizar() {
 # Monitoreo en tiempo real usando inotifywait
 zenity --info --text="🕵️‍♂️ Monitoreando cambios en $carpeta_origen..."
 inotifywait -m -r -e modify,create,delete,move "$carpeta_origen" | while read -r directorio evento archivo; do
-    zenity --info --text="🔔 Cambio detectado: $evento en $archivo"
+    echo ="🔔 Cambio detectado: $evento en $archivo"
     sincronizar
 done
