@@ -40,7 +40,7 @@ nombre_app=$(zenity --entry --title="Nombre del lanzador" --text="Escribe el nom
 [ -z "$nombre_app" ] && zenity --error --text="No se proporcionó nombre" && exit 1
 
 # Ícono (opcional)
-icono=$(zenity --file-selection --title="Selecciona el ícono (opcional)" --file-filter="*.png *.svg *.xpm *.ico")
+icono=$(zenity --file-selection --title="Selecciona el ícono (opcional)" --file-filter="*.jpg *.png *.svg *.xpm *.ico")
 [ -z "$icono" ] && icono=""
 
 # Categorías
