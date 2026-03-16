@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QWidget" name="centralwidget">
+  <layout class="QVBoxLayout">
+   <item><widget class="QComboBox" name="modeBox">
+     <item><property name="text"><string>Desempaquetar</string></property></item>
+     <item><property name="text"><string>Empaquetar</string></property></item>
+   </widget></item>
+   <item><widget class="QListWidget" name="table"/></item>
+   <item><widget class="QPushButton" name="addBtn"><property name="text"><string>Agregar</string></property></widget></item>
+   <item><widget class="QLineEdit" name="outputEdit"/></item>
+   <item><widget class="QPushButton" name="outputBtn"><property name="text"><string>Seleccionar Destino</string></property></widget></item>
+   <item><widget class="QProgressBar" name="progressBar"/></item>
+   <item><widget class="QTextEdit" name="logPanel"/></item>
+   <item>
+    <layout class="QHBoxLayout">
+     <item><widget class="QPushButton" name="runBtn"><property name="text"><string>Ejecutar</string></property></widget></item>
+     <item><widget class="QPushButton" name="cancelBtn"><property name="text"><string>Cancelar</string></property></widget></item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

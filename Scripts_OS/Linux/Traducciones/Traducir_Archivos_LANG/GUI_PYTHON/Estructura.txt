@@ -1,0 +1,23 @@
+🚀 2. Reestructura Profesional
+
+Nueva arquitectura:
+
+app/
+│
+├── main.py
+├── config.py
+│
+├── core/
+│   ├── batch_manager.py
+│   ├── cache.py
+│   ├── rate_limiter.py
+│   └── translator_service.py
+│
+├── providers/
+│   ├── base.py
+│   ├── google_provider.py
+│   ├── deepl_provider.py
+│   └── factory.py
+│
+└── gui/
+    └── main_window.py

@@ -1,0 +1,14 @@
+jar-manager-pro/
+│
+├── bin/
+│   ├── jar-manager-core.sh
+│   ├── jar-manager-yad
+│   ├── jar-manager-zenity
+│   └── jar-manager-cli
+│
+├── logs/
+│
+├── install.sh
+├── uninstall.sh
+└── README.md
+

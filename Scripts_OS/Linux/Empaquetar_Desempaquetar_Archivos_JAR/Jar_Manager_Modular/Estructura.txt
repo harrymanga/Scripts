@@ -1,0 +1,11 @@
+jar-manager/
+ ├── bin/
+ │   └── jar_manager_yad.sh
+ │ 
+ ├── lib/
+ │   ├── core.sh
+ │   └── utils.sh
+ │ 
+ ├── logs/
+ │ 
+ └── install.sh
