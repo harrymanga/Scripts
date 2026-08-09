@@ -1,0 +1,77 @@
+#!/bin/bash
+
+phd=${XDG_RUNTIME_DIR:-/run/user/$UID}/protonhax
+
+usage() {
+    echo "Uso:"
+    echo "protonhax init <cmd>"
+    printf "\tSteam solo debe llamarlo con \"protonhax init %%COMMAND%%\"\n"
+    echo "protonhax ls"
+    printf "\tEnumera todos los juegos actualmente en ejecución\n"
+    echo "protonhax run <appid> <cmd>"
+    printf "\tEjecuta <cmd> en el contexto de <appid> con proton\n"
+    echo "protonhax cmd <appid>"
+    printf "\tEjecuta cmd.exe en el contexto de <appid>\n"
+    echo "protonhax exec <appid> <cmd>"
+    printf "\tEjecuta <cmd> en el contexto de <appid>\n"
+}
+
+if [[ $# -lt 1 ]]; then
+    usage
+    exit 1
+fi
+
+c=$1
+shift
+
+if [[ "$c" == "init" ]]; then
+    mkdir -p $phd/$SteamAppId
+    printf "%s\n" "${@}" | grep -m 1 "/proton" > $phd/$SteamAppId/exe
+    printf "%s" "$STEAM_COMPAT_DATA_PATH/pfx" > $phd/$SteamAppId/pfx
+    declare -px > $phd/$SteamAppId/env
+    "$@"
+    ec=$?
+    rm -r $phd/$SteamAppId
+    exit $ec
+elif [[ "$c" == "ls" ]]; then
+    if [[ -d $phd ]]; then
+        ls -1 $phd
+    fi
+elif [[ "$c" == "run" ]] || [[ "$c" == "cmd" ]] || [[ "$c" == "exec" ]]; then
+    if [[ $# -lt 1 ]]; then
+        usage
+        exit 1
+    fi
+    if [[ ! -d $phd ]]; then
+        printf "Ninguna aplicación se ejecuta con appid \"%s\"\n" "$1"
+        exit 2
+    fi
+    if [[ ! -d $phd/$1 ]]; then
+        printf "Ninguna aplicación se ejecuta con appid \"%s\"\n" "$1"
+        exit 2
+    fi
+    SteamAppId=$1
+    shift
+
+    source $phd/$SteamAppId/env
+
+    if [[ "$c" == "run" ]]; then
+        if [[ $# -lt 1 ]]; then
+            usage
+            exit 1
+        fi
+        exec "$(cat $phd/$SteamAppId/exe)" run "$@"
+    elif [[ "$c" == "cmd" ]]; then
+        exec "$(cat $phd/$SteamAppId/exe)" run "$(cat $phd/$SteamAppId/pfx)/drive_c/windows/system32/cmd.exe"
+    elif [[ "$c" == "exec" ]]; then
+        if [[ $# -lt 1 ]]; then
+            usage
+            exit 1
+        fi
+        exec "$@"
+    fi
+else
+    printf "Comando desconocido %s\n" "$c"
+    usage
+    exit 1
+fi
