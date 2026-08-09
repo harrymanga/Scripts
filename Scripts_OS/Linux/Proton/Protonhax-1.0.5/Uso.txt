@@ -1,0 +1,12 @@
+
+
+Comando:
+
+protonhax run <appid> <path/to/program> [args...]
+
+
+<appid> Id del juego , se puede identificar con :
+
+protonhax ls
+
+<path/to/program> ruta del programa externo a ejecutar
