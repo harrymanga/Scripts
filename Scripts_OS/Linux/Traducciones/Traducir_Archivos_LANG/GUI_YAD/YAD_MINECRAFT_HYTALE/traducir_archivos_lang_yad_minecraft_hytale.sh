@@ -1,11 +1,24 @@
 #!/bin/bash
+# minecraft_hytale.sh — Traductor .lang+.json por proyectos para juegos
+# (especialidad Minecraft/Hytale). Uso: *.sh [es|en]
+# Idioma: parámetro > $LANG > es.
+
+# --- Idioma ---
+LANG_ID="es"
+case "${LANG:0:2}" in
+    en|EN) LANG_ID="en" ;;
+esac
+[ "$1" = "en" ] && LANG_ID="en"
+[ "$1" = "es" ] && LANG_ID="es"
+# shellcheck disable=SC1090
+. "$(dirname "$0")/lang_minecraft_${LANG_ID}.sh"
 
 BASE="$HOME/.langforge"
 mkdir -p "$BASE/projects"
 
 APP="LangForge – Minecraft/Hytale Industrial"
 
-PROJECT=$(yad --entry --title="$APP" --text="Nombre del proyecto:")
+PROJECT=$(yad --entry --title="$APP" --text="$MSG_PROJECT")
 [ -z "$PROJECT" ] && exit
 
 PROJDIR="$BASE/projects/$PROJECT"
@@ -23,8 +36,8 @@ PRIMARY KEY(original,target)
 
 CONFIG=$(yad --form \
 --title="$APP" \
---field="Idioma destino (Ejemplo Spanish = es):" "" \
---field="Modo revisión:CHK" "FALSE")
+--field="$MSG_LANG" "" \
+--field="$MSG_REVIEW:CHK" "FALSE")
 
 IFS="|" read TARGET REVIEW <<< "$CONFIG"
 
@@ -87,7 +100,7 @@ process_json() {
         TRANS=$(translate_cached "$VALUE")
 
         if [ "$REVIEW" = "TRUE" ]; then
-            TRANS=$(yad --entry --title="Revisión" --text="$VALUE" --entry-text="$TRANS")
+            TRANS=$(yad --entry --title="$MSG_REVIEW_TITLE" --text="$VALUE" --entry-text="$TRANS")
         fi
 
         echo "\"$KEY\": \"$TRANS\""
@@ -105,5 +118,5 @@ for FILE in "${FILE_ARRAY[@]}"; do
     esac
 done
 
-yad --info --text="🏭 Traducción completada para Minecraft/Hytale"
+yad --info --text="$MSG_DONE"
 

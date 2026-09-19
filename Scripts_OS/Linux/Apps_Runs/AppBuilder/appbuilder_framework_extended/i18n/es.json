@@ -1,0 +1,11 @@
+{
+  "TITLE": "AppBuilder Framework",
+  "CREATE_APP": "Crear Aplicación",
+  "PACKAGE": "Empaquetar (ZIP)",
+  "EXIT": "Salir",
+  "APP_NAME": "Nombre de la aplicación",
+  "DEST_PATH": "Ruta destino",
+  "INTERPRETER": "Intérprete",
+  "INTER_ARGS": "Argumentos del intérprete",
+  "EXEC_FILE": "Archivo principal"
+}

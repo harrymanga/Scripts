@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Creador de Lanzadores
+Exec=crear_lanzador.sh
+Icon=icon
+Type=Application
+Categories=Utility;

@@ -1,0 +1,18 @@
+#!/bin/bash
+# English messages — jar_manager.sh
+MSG_INVALID_JAR='Invalid file'
+MSG_UNPACKED='Unpacked'
+MSG_PACKED='Packed'
+MSG_APP='Jar Manager'
+MSG_OUTDIR='Output folder'
+MSG_PICK_JAR='Select JAR files'
+MSG_PICK_DIR='Select folders to pack'
+MSG_JAR_NAME='JAR name'
+MSG_JAR_NAME_TEXT='Name for the generated JAR:'
+MSG_UNPACK_DONE='Unpack completed'
+MSG_PACK_DONE='Pack completed'
+MSG_CLI_USE='Usage: jar_manager.sh [es|en] [--cli pack|unpack OUTPUT items...]'
+MSG_DONE_CLI='Process completed.'
+MSG_BAD_ACTION='Invalid action'
+MSG_DEP_MISSING='Missing dependency, trying to install: %s'
+MSG_DEP_FAIL='Could not install %s. Install it manually.'

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Mensajes en español — jar_manager.sh
+MSG_INVALID_JAR='Archivo no válido'
+MSG_UNPACKED='Desempaquetado'
+MSG_PACKED='Empaquetado'
+MSG_APP='Jar Manager'
+MSG_OUTDIR='Carpeta de salida'
+MSG_PICK_JAR='Seleccionar archivos JAR'
+MSG_PICK_DIR='Seleccionar carpetas a empaquetar'
+MSG_JAR_NAME='Nombre del JAR'
+MSG_JAR_NAME_TEXT='Nombre para el JAR generado:'
+MSG_UNPACK_DONE='Desempaquetado completado'
+MSG_PACK_DONE='Empaquetado completado'
+MSG_CLI_USE='Uso: jar_manager.sh [es|en] [--cli pack|unpack SALIDA items...]'
+MSG_DONE_CLI='Proceso completado.'
+MSG_BAD_ACTION='Acción inválida'
+MSG_DEP_MISSING='Dependencia faltante, intentando instalar: %s'
+MSG_DEP_FAIL='No se pudo instalar %s. Instálalo manualmente.'

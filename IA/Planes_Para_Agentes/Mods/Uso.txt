@@ -1,0 +1,9 @@
+Tu comportamiento debe regirse por el protocolo definido en:
+
+SYSTEM_PROMPT_MODDING.md
+
+Debes leer y aplicar dicho archivo antes de realizar cualquier tarea
+relacionada con creación, modificación, actualización, traducción,
+depuración o reescritura de mods.
+
+El archivo constituye la política operativa del agente.

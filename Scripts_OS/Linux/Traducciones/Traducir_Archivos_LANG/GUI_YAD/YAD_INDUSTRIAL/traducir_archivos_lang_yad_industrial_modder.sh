@@ -1,11 +1,24 @@
 #!/bin/bash
+# industrial_modder.sh — Traductor .lang por proyectos (caché SQLite, modo revisión).
+# Versión única del par industrial/modder. Uso: *.sh [es|en]
+# Idioma: parámetro > $LANG > es.
+
+# --- Idioma ---
+LANG_ID="es"
+case "${LANG:0:2}" in
+    en|EN) LANG_ID="en" ;;
+esac
+[ "$1" = "en" ] && LANG_ID="en"
+[ "$1" = "es" ] && LANG_ID="es"
+# shellcheck disable=SC1090
+. "$(dirname "$0")/lang_modder_${LANG_ID}.sh"
 
 BASE="$HOME/.lang_modder"
 mkdir -p "$BASE/projects"
 
 APP="Lang Modder Industrial"
 
-PROJECT=$(yad --entry --title="$APP" --text="Nombre del proyecto:")
+PROJECT=$(yad --entry --title="$APP" --text="$MSG_PROJECT")
 [ -z "$PROJECT" ] && exit
 
 PROJDIR="$BASE/projects/$PROJECT"
@@ -24,8 +37,8 @@ PRIMARY KEY(original,target)
 
 CONFIG=$(yad --form \
 --title="$APP" \
---field="Idioma destino:" "ES" \
---field="Modo revisión:CHK" "FALSE")
+--field="$MSG_LANG" "ES" \
+--field="$MSG_REVIEW:CHK" "FALSE")
 
 IFS="|" read TARGET REVIEW <<< "$CONFIG"
 
@@ -40,7 +53,7 @@ OLD_HASH=$(cat "$STATE" 2>/dev/null)
 NEW_HASH=$(hash_project)
 
 if [ "$OLD_HASH" = "$NEW_HASH" ]; then
-    yad --info --text="No hay cambios nuevos."
+    yad --info --text="$MSG_NO_CHANGES"
     exit
 fi
 
@@ -87,7 +100,7 @@ for FILE in "${FILE_ARRAY[@]}"; do
             TRANS=$(translate_line "$VALUE")
 
             if [ "$REVIEW" = "TRUE" ]; then
-                TRANS=$(yad --entry --title="Revisión" --text="$VALUE" --entry-text="$TRANS")
+                TRANS=$(yad --entry --title="$MSG_REVIEW_TITLE" --text="$VALUE" --entry-text="$TRANS")
             fi
 
             echo "$KEY=$TRANS"
@@ -98,7 +111,8 @@ for FILE in "${FILE_ARRAY[@]}"; do
         COUNT=$((COUNT+1))
         PERCENT=$((COUNT*100/TOTAL))
         echo "$PERCENT"
-        echo "# Procesando $COUNT de $TOTAL"
+        # shellcheck disable=SC2059
+        printf "# $MSG_PROC\n" "$COUNT" "$TOTAL"
 
     done < "$FILE" > "$OUTPUT"
 
@@ -107,5 +121,5 @@ done
 
 echo "$NEW_HASH" > "$STATE"
 
-yad --info --text="🏭 Proyecto actualizado correctamente."
+yad --info --text="$MSG_DONE"
 

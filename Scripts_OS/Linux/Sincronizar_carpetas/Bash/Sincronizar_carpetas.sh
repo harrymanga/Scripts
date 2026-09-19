@@ -1,4 +1,19 @@
 #!/bin/bash
+# Sincronizar_carpetas.sh — alternativa ligera Linux (sin Python).
+# Uso: Sincronizar_carpetas.sh [es|en]
+# Requiere: zenity, inotify-tools, rsync (los dos primeros se autoinstalan).
+# Ver README.md y la versión canónica multiplataforma en
+# ../../../Multiplataforma/Sincronizar_Carpetas/sync-auto/.
+
+# --- Idioma: parámetro > $LANG > es ---
+LANG_ID="es"
+case "${LANG:0:2}" in
+    en|EN) LANG_ID="en" ;;
+esac
+[ "$1" = "en" ] && LANG_ID="en"
+[ "$1" = "es" ] && LANG_ID="es"
+# shellcheck disable=SC1090
+. "$(dirname "$0")/lang_${LANG_ID}.sh"
 
 # Detectar sistema operativo y distro
 detectar_distro() {
@@ -10,10 +25,12 @@ detectar_distro() {
     fi
 }
 
-# Instalar zenity si no está instalado
+# Instalar zenity si no está instalado.
+# OJO: aquí NO se puede usar zenity para avisar (no existe aún):
+# se informa por consola.
 if ! command -v zenity &> /dev/null; then
     distro=$(detectar_distro)
-    zenity --info --text="Zenity no está instalado. Intentando instalar en $distro..."
+    printf "$MSG_INSTALLING\n" "zenity" "$distro"
     case "$distro" in
         ubuntu|debian)
             sudo apt update && sudo apt install -y zenity
@@ -25,7 +42,7 @@ if ! command -v zenity &> /dev/null; then
             sudo pacman -Sy zenity --noconfirm
             ;;
         *)
-            zenity --info --text="Distribución no soportada para instalación automática."
+            echo "$MSG_UNSUPPORTED"
             exit 1
             ;;
     esac
@@ -34,7 +51,7 @@ fi
 # Instalar inotifywait si no está instalado
 if ! command -v inotifywait &> /dev/null; then
     distro=$(detectar_distro)
-    zenity --info --text="inotifywait no está instalado. Intentando instalar en $distro..."
+    zenity --info --text="$(printf "$MSG_INSTALLING" "inotifywait" "$distro")"
     case "$distro" in
         ubuntu|debian)
             sudo apt update && sudo apt install -y inotify-tools
@@ -46,29 +63,29 @@ if ! command -v inotifywait &> /dev/null; then
             sudo pacman -Sy inotify-tools --noconfirm
             ;;
         *)
-            zenity --info --text="Distribución no soportada para instalación automática."
+            zenity --info --text="$MSG_UNSUPPORTED"
             exit 1
             ;;
     esac
 fi
 
 # Carpeta a monitorear
-carpeta_origen=$(zenity --file-selection --directory --title="Selecciona la Carpeta Origen")
-    [ -z "$carpeta_origen" ] && zenity --error --text="No se seleccionó una carpeta" && exit 1
+carpeta_origen=$(zenity --file-selection --directory --title="$MSG_TITLE_SRC")
+    [ -z "$carpeta_origen" ] && zenity --error --text="$MSG_NO_SELECTION" && exit 1
 
 # Destinos a sincronizar
-carpeta_detino=$(zenity --file-selection --directory --title="Selecciona la Carpeta Destino")
-    [ -z "$carpeta_detino" ] && zenity --error --text="No se seleccionó una carpeta" && exit 1
+carpeta_destino=$(zenity --file-selection --directory --title="$MSG_TITLE_DST")
+    [ -z "$carpeta_destino" ] && zenity --error --text="$MSG_NO_SELECTION" && exit 1
 
 # Función para copiar la carpeta
 sincronizar() {
-    rsync -av --delete "$carpeta_origen/" "$carpeta_detino/"
-    zenity --info --text="✅ Sincronizado con $carpeta_detino"
+    rsync -av --delete "$carpeta_origen/" "$carpeta_destino/"
+    zenity --info --text="$(printf "$MSG_SYNCED" "$carpeta_destino")"
 }
 
 # Monitoreo en tiempo real usando inotifywait
-zenity --info --text="🕵️‍♂️ Monitoreando cambios en $carpeta_origen..."
+zenity --info --text="$(printf "$MSG_MONITORING" "$carpeta_origen")"
 inotifywait -m -r -e modify,create,delete,move "$carpeta_origen" | while read -r directorio evento archivo; do
-    echo ="🔔 Cambio detectado: $evento en $archivo"
+    echo "$(printf "$MSG_CHANGED" "$evento" "$archivo")"
     sincronizar
 done

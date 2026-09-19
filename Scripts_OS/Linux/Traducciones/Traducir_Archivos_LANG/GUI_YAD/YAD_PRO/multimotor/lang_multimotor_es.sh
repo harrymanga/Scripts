@@ -1,0 +1,16 @@
+#!/bin/bash
+# Mensajes en español — fui.sh (%s = parámetros de printf)
+MSG_CFG_TITLE='Configurar API Keys'
+MSG_FLD_GOOGLE='Google API Key:'
+MSG_FLD_DEEPL='DeepL API Key:'
+MSG_FLD_OPENAI='OpenAI API Key:'
+MSG_LANG='Idioma destino:'
+MSG_CFG_CHK='Configurar API Keys'
+MSG_GOOGLE_FAIL='Google falló. Intentando DeepL...'
+MSG_PROCESSED='Procesado:'
+MSG_PROC='Procesando (%s/%s)'
+MSG_DONE_1='Proceso completado.'
+MSG_FILES='Archivos:'
+MSG_NEW='¿Nueva traducción?'
+MSG_YES='Sí'
+MSG_EXIT='Salir'

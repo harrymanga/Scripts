@@ -1,4 +1,18 @@
 #!/bin/bash
+# zenity.sh — Traductor .lang (espejo Zenity del flujo YAD, Google/trans-shell/DeepL/OpenAI).
+# Único espejo Zenity del grupo: se conserva a propósito.
+# Uso: *.sh [es|en]   Idioma: parámetro > $LANG > es (también idioma destino).
+
+# --- Idioma ---
+LANG_ID="es"
+case "${LANG:0:2}" in
+    en|EN) LANG_ID="en" ;;
+esac
+[ "$1" = "en" ] && LANG_ID="en"
+[ "$1" = "es" ] && LANG_ID="es"
+# shellcheck disable=SC1090
+. "$(dirname "$0")/lang_zenity_${LANG_ID}.sh"
+[ "$LANG_ID" = "en" ] && TARGET="en" || TARGET="es"
 
 # ---------- CONFIG ----------
 TMPDIR="/tmp/lang_translate"
@@ -6,9 +20,9 @@ mkdir -p "$TMPDIR"
 
 # ---------- GUI: Elegir método ----------
 METHOD=$(zenity --list \
-    --title="Traductor .lang" \
-    --text="Selecciona método de traducción" \
-    --column="Método" \
+    --title="$MSG_TITLE" \
+    --text="$MSG_METHOD_LABEL" \
+    --column="$MSG_COL" \
     "Google (translate-shell)" \
     "DeepL API" \
     "OpenAI API")
@@ -18,7 +32,7 @@ METHOD=$(zenity --list \
 # ---------- Seleccionar archivos ----------
 FILES=$(zenity --file-selection \
     --multiple \
-    --file-filter="Archivos .lang | *.lang")
+    --file-filter="$MSG_FILES_LABEL")
 
 [ -z "$FILES" ] && exit
 
@@ -48,14 +62,14 @@ translate_text() {
 
     case "$METHOD" in
         "Google (translate-shell)")
-            trans -brief :es "$text"
+            trans -brief :"$TARGET" "$text"
             ;;
         "DeepL API")
             API_KEY=$(zenity --entry --title="DeepL API Key")
             curl -s -X POST "https://api-free.deepl.com/v2/translate" \
                 -d auth_key="$API_KEY" \
                 -d text="$text" \
-                -d target_lang="ES" | jq -r '.translations[0].text'
+                -d target_lang="$TARGET" | jq -r '.translations[0].text'
             ;;
         "OpenAI API")
             API_KEY=$(zenity --entry --title="OpenAI API Key")
@@ -65,7 +79,7 @@ translate_text() {
                 -d "{
                     \"model\": \"gpt-4o-mini\",
                     \"messages\": [
-                        {\"role\": \"system\", \"content\": \"Translate to Spanish preserving XML-like tags exactly.\"},
+                        {\"role\": \"system\", \"content\": \"Translate preserving XML-like tags exactly.\"},
                         {\"role\": \"user\", \"content\": \"$text\"}
                     ]
                 }" | jq -r '.choices[0].message.content'
@@ -75,7 +89,7 @@ translate_text() {
 
 # ---------- Procesar archivos ----------
 for FILE in "${FILE_ARRAY[@]}"; do
-    OUTPUT="${FILE%.lang}_es.lang"
+    OUTPUT="${FILE%.lang}_${TARGET}.lang"
     > "$OUTPUT"
 
     while IFS= read -r line; do
@@ -95,5 +109,5 @@ for FILE in "${FILE_ARRAY[@]}"; do
 
 done
 
-zenity --info --text="Traducción completada ✅"
+zenity --info --text="$MSG_DONE"
 
