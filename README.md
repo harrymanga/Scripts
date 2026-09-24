@@ -35,10 +35,7 @@ Colección de scripts de apoyo para diversas tareas de automatización y adminis
 Scripts Python que corren en Linux y Windows (y macOS), organizados por función:
 
 - **Sincronizar_Carpetas/sync-auto**: versión canónica (tkinter+watchdog, múltiples destinos, es/en, con Uso en su README)
-- **Traducciones**:
-  - **TraductorPro**: proyecto independiente en `../Proyectos_De_Software/Python/TraductorPro/` (canónico oficial)
-  - **Traducir_Archivos_PROPERTIES**: GUI Tkinter con DeepL (`translate_properties_gui.py`, `translate_properties_gui_trans_shell.py`)
-  - **Traducir_Archivos_TXT**: Traducción de TXT con googletrans (`main2.py`)
+- **Traducciones**: proyecto independiente en `../Proyectos_De_Software/Python/TraductorPro/` (canónico oficial; las variantes Python PROPERTIES/TXT fueron absorbidas)
 - **Empaquetar JAR (Python)**: GUI Qt completa en `../Proyectos_De_Software/Python/JarTool/` (canónica Python del grupo; `run.sh`)
 - **Convertir_PDF_a_Audio**: PDF→MP3 con Tkinter (auto-deps, es/en, ver su README)
 - **Convertir_Audio_a_Texto**: audio→texto con reconocimiento Google es-ES (auto-deps, ver su README)
