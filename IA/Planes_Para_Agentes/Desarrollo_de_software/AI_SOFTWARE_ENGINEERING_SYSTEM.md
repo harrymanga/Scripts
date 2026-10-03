@@ -1,7 +1,9 @@
 # AI Software Engineering System
 
-**Versión:** 1.0  
+**Versión:** 1.1  
 **Propósito:** Sistema operativo universal para agentes de IA que crean, modifican, refactorizan, mantienen, depuran y evolucionan proyectos de software.
+
+**Historial:** v1.1 incorpora las secciones 51–57 (versión canónica, estructura por funciones, nombres, README operativo, arranque sin fricción, i18n operativa, stack GUI), destiladas de la práctica acumulada. Las secciones 1–50 no cambian.
 
 ---
 
@@ -1489,6 +1491,68 @@ Cada cambio debe responder afirmativamente a estas preguntas:
 ```
 
 Si la respuesta es no, reconsidera la implementación antes de finalizar.
+
+---
+
+# 51. Versión única canónica (deduplicación)
+
+Cuando la Fase 0 detecte varios proyectos o scripts con la misma función:
+
+1. Verifica cada candidato por lectura directa (no por el nombre).
+2. Elige **un canónico** con criterios explícitos: cobertura funcional, tests, mantenibilidad, dependencias.
+3. Retira el resto (ver §40–§41 antes de eliminar).
+4. Si dos variantes se conservan a propósito (p. ej. gratis frente a API de pago, o GUI frente a CLI), documéntalo como **par complementario**, no como duplicado.
+5. La versión canónica vive **dentro del repositorio** correspondiente, lista para control de versiones.
+
+# 52. Higiene del repositorio
+
+- Sin archivos puntero del tipo `LEEME.txt`: al retirar un duplicado fuera de un repo, elimina el original; si la carpeta queda vacía, elimínala también.
+- Sin carpetas vacías ni artefactos regenerables versionados (`__pycache__`, `.pyc`, `venv/`, `.exe` regenerables, `logs/` vacíos).
+- Sin commits ni push sin autorización explícita del usuario (ver §29 y §40). Deja los cambios reversibles en el working tree.
+
+# 53. Nombres funcionales y estándar angloparlante
+
+- Proyectos y archivos con nombres que describan su función. Prohibidos los crípticos (`dr.sh`, `fui.sh`, `main1.py`, `pushButton_2`).
+- Identificadores (variables, funciones, clases, archivos) en **inglés**, para que otros desarrolladores puedan continuar el proyecto.
+- La interacción y la documentación dirigida al usuario siguen en su idioma (ver §2).
+
+# 54. Estructura por funciones
+
+- Proyecto multi-archivo → carpeta propia con subcarpetas por rol (`src/`, `data/`, `tests/`…), manteniendo la operatividad (rutas relativas, imports intactos).
+- Si una carpeta reúne varios scripts principales, cada uno va a su **subcarpeta con sus asociados** (idiomas, recursos).
+- Estructura Python recomendada: `src/gui/`, `src/core/`, `src/lang/`, `src/themes/`, `src/i18n.py`, `data/`, `tests/`. **Ningún archivo fuera de `src/gui/` contiene estructura de GUI.**
+- Un script que evoluciona a proyecto se reubica en el repositorio de proyectos según su lenguaje.
+
+# 55. README operativo
+
+Todo README de proyecto o script incluye, además de §31:
+
+```text
+Requisitos
+Uso paso a paso (comandos copiables)
+Qué esperar (salidas, artefactos)
+Si algo falla (errores típicos y solución)
+Punto de entrada documentado
+```
+
+# 56. Arranque sin fricción
+
+- Ningún programa exige instalación manual previa: crea su entorno, instala dependencias y ejecuta; solo avisa ante errores o decisiones necesarias.
+- Patrón: lanzador `run.sh` / `run.bat` (crea `.venv`, instala, ejecuta) y manifiesto de dependencias (`requirements.txt` o equivalente).
+- Excepción documentada: paquetes del sistema (no instalables por pip) se declaran en `system-packages.txt` y el lanzador los resuelve o indica el comando exacto.
+
+# 57. Internacionalización operativa
+
+Además de §14:
+
+- Idiomas en archivos separados con **carga dinámica** (p. ej. `src/lang/lang_xx.json`): agregar un idioma es añadir un archivo, cero cambios de código.
+- Español por defecto con fallback; cada clave existe en todos los idiomas (verificado por tests, sin huérfanas ni faltantes).
+
+# 58. Stack GUI y plantillas
+
+- Congela el stack existente: no migres GUIs funcionales entre bindings.
+- Fija un estándar para lo nuevo (p. ej. un binding para apps completas y otro ligero para utilidades) y documenta plantillas de referencia + checklist obligatorio (layouts reales, hilos para I/O, temas explícitos claro/oscuro, QSettings, log + statusbar, menús base).
+- Los temas claro y oscuro son explícitos (nunca el nativo como "claro").
 
 ---
 

@@ -8,7 +8,9 @@ Colección de scripts de apoyo para diversas tareas de automatización y adminis
 
 #### Linux
 
+- **Anaconda**: gestión/entornos conda (ver su README)
 - **Apps_Runs**: generador único extended (GUI+CLI, ver su README)
+- **Comprimir_Carpetas_con_7zip**: compresión con 7zip (ver su README)
 - **Convertir_A_CHD**: `Multiconversor_a_CHD.sh` único (progreso+log, es/en) + `game2chd.sh` CLI terceros (ver su README)
 - **Convertir_De_ISO_a_CSO**: `Multiconversor_De_ISO_a_CSO.sh` único con ciso (es/en, ver su README)
 - **Crear_Archivos\_.Desktop**: Creación de lanzadores
@@ -17,7 +19,9 @@ Colección de scripts de apoyo para diversas tareas de automatización y adminis
 - **Ejecutar_Sh**: Ejecución de scripts shell
 - **Empaquetar_Desempaquetar_Archivos_JAR**: `jar_manager.sh` único (GUI auto yad→zenity + CLI, es/en, ver su README)
 - **Encabezado_de_Archivos_Sh**: Plantillas para scripts shell
-- **Montar Isos**: Montaje de imágenes ISO
+- **Montar Isos**: Montaje de imágenes ISO (`/mnt/Isos` por defecto)
+- **Games**: lanzadores Lutris + V_Rising (logs en `/tmp/`, ver sus READMEs)
+- **Proton**: helpers de compatibilidad Windows-en-Linux (ver su README)
 - **Sincronizar_carpetas/Bash**: alternativa ligera sin Python (inotifywait+rsync, es/en; ver su README)
 - **Traducciones**: Bash/YAD/Zenity con i18n (LANG: 5 únicos + READMEs; CFG y PROPERTIES como pares complementarios documentados)
 - **Yay_Update**: Actualización con yay (AUR helper)
@@ -32,7 +36,10 @@ Colección de scripts de apoyo para diversas tareas de automatización y adminis
 
 #### Multiplataforma
 
-Scripts Python que corren en Linux y Windows (y macOS), organizados por función:
+Scripts Python que corren en Linux y Windows (y macOS), organizados por función.
+Nota de ubicación: las rutas `../Proyectos_De_Software/...` asumen el layout
+`GitHub/Scripts/` + `GitHub/Proyectos_De_Software/` como carpetas hermanas,
+verificado válido el 2026-10-03. Si mueves un repo fuera de `GitHub/`, ajusta la ruta.
 
 - **Sincronizar_Carpetas/sync-auto**: versión canónica (tkinter+watchdog, múltiples destinos, es/en, con Uso en su README)
 - **Traducciones**: proyecto independiente en `../Proyectos_De_Software/Python/TraductorPro/` (canónico oficial; las variantes Python PROPERTIES/TXT fueron absorbidas)
@@ -46,6 +53,12 @@ Scripts Python que corren en Linux y Windows (y macOS), organizados por función
 - Shell Script (Bash)
 - Python
 - PyQt/PySide para interfaces gráficas
+
+### IA (`IA/Planes_Para_Agentes/`)
+
+- **Desarrollo_de_software**: `AI_SOFTWARE_ENGINEERING_SYSTEM.md`
+- **Mods**: `MODDING_AGENT_PROTOCOL.md` + `Uso.txt`
+- **Prompts**: (carpeta reservada)
 
 ## Uso
 
