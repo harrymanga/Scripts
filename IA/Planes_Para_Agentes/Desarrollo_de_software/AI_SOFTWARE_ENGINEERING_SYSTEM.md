@@ -1556,6 +1556,170 @@ Además de §14:
 
 ---
 
+## 59. Regla de revisión periódica (cada 3 fases)
+
+Cada 3 fases de desarrollo, se debe:
+
+1. Volver a leer el `AI_SOFTWARE_ENGINEERING_SYSTEM.md` para verificar que el proyecto sigue alineado con todas las normas.
+2. Revisar todo el código implementado para identificar duplicaciones, código muerto o sobreingeniería.
+3. Revisar y ejecutar todos los tests para garantizar que nada se ha roto.
+4. Revisar la documentación para asegurar que esté actualizada con los cambios realizados.
+5. Refactorizar cualquier código que se haya vuelto innecesariamente complejo o duplicado.
+
+Esta regla evita que el proyecto se desvíe de sus principios originales y mantiene la calidad del código a lo largo del tiempo.
+
+---
+
+## 60. Revisión, pulido y factorización periódica (cada 3 fases)
+
+Dependiendo del proyecto, cada 3 fases de desarrollo se debe:
+
+1. Releer el `AI_SOFTWARE_ENGINEERING_SYSTEM.md` para verificar que el proyecto sigue alineado con todas las normas y no pierde coherencia.
+2. Revisar todo el código implementado para identificar duplicaciones, código muerto, sobreingeniería o archivos huérfanos.
+3. Revisar y ejecutar todos los tests para garantizar que nada se ha roto.
+4. Revisar la documentación para asegurar que esté actualizada con los cambios realizados.
+5. Pulir y factorizar cualquier código que se haya vuelto innecesariamente complejo, duplicado o que ya no se utilice.
+
+Esta norma se aplica además de la regla #59 para garantizar que el proyecto se mantenga lo más limpio posible a lo largo del tiempo.
+
+---
+
+## 61. Evitar bucles de respuesta redundante
+
+Se debe evitar realizar muchas iteraciones a respuestas redundantes o entrar en bucles cerrados donde el agente repite el mismo razonamiento sin avanzar.
+
+- Si después de realizar 3 iteraciones similares sobre un mismo punto el usuario sigue diciendo simplemente "continúa" o equivalente sin dar una dirección nueva, el agente debe **detenerse y hacer preguntas al usuario** para obtener una dirección concreta antes de seguir.
+- No se debe asumir que "continúa" significa avanzar automáticamente a la siguiente fase del plan sin confirmación.
+- El agente debe ofrecer opciones claras y esperar la decisión del usuario para evitar bucles de retroalimentación vacía.
+
+Esta norma garantiza que el proyecto avance con propósito y no se quede estancado en repeticiones sin valor agregado.
+
+---
+
+## 62. Snapshot del proyecto antes de cambios importantes
+
+Antes de realizar cualquier cambio significativo en el código (implementación de nuevas funcionalidades, refactorización, eliminación de archivos, cambios en arquitectura, etc.), se debe crear un **snapshot del estado actual del proyecto** para poder regresar a una instancia anterior si el cambio falla o introduce regresiones.
+
+El snapshot debe incluir:
+
+1. **Copia de seguridad del estado actual**: crear una copia del directorio del proyecto o utilizar control de versiones (git commit, git tag, o copia de seguridad manual en directorio con timestamp).
+2. **Ejecución de tests antes del cambio**: verificar que todos los tests pasan antes de iniciar cualquier modificación.
+3. **Documentar el cambio planeado**: anotar qué se va a modificar, por qué y qué se espera lograr.
+4. **Verificación posterior al cambio**: después de aplicar el cambio, ejecutar nuevamente todos los tests y verificar que la funcionalidad no se ha roto.
+5. **Rollback si es necesario**: si el cambio introduce errores o regresiones, restaurar el snapshot inmediatamente y reevaluar el enfoque.
+
+Esta norma protege al proyecto contra cambios que puedan romper la funcionalidad existente y permite una recuperación rápida ante problemas inesperados.
+
+---
+
+## 63. Colores y estilos de texto en CLI
+
+Usar colores en la terminal para diferenciar tipos de mensajes:
+
+- **Rojo**: Errores y fallos críticos
+- **Amarillo**: Advertencias
+- **Azul**: Información general
+- **Verde**: Éxitos y operaciones completadas
+
+Implementación por lenguaje:
+
+- **Python**: `colorama`, `rich` o `typer`
+- **Node.js/JavaScript**: `chalk` o `kleur`
+- **C/C++**: Códigos de escape ANSI o `ncurses`
+
+Ejemplo (Python con rich):
+```python
+from rich import print
+print("[red]Error:[/red] No se pudo completar la operación")
+print("[green]✓[/green] Operación completada correctamente")
+print("[yellow]⚠[/yellow] Advertencia: acción no recomendada")
+print("[blue]ℹ[/blue] Información adicional disponible")
+```
+
+---
+
+## 64. Tablas y cajas estructuradas en CLI
+
+Organizar datos en filas y columnas con bordes limpios en lugar de texto plano para mejorar la lectura:
+
+- **Python**: `rich` (tablas con bordes) o `tabulate`
+- **Node.js**: `cli-table3`
+
+Ejemplo (Python con rich):
+```python
+from rich.table import Table
+table = Table(title="Mods instalados")
+table.add_column("Nombre", style="cyan")
+table.add_column("Versión", style="magenta")
+table.add_row("MiMod", "1.0.0")
+print(table)
+```
+
+---
+
+## 65. Barras de progreso y indicadores de carga
+
+Mostrar indicadores visuales cuando el programa procesa algo que tome segundos o minutos:
+
+- **Python**: `tqdm` o `rich.progress`
+- **Node.js**: `ora` (spinners) o `cli-progress`
+
+Ejemplo (Python con tqdm):
+```python
+from tqdm import tqdm
+import time
+
+for i in tqdm(range(100), desc="Procesando mod..."):
+    time.sleep(0.01)
+```
+
+Ejemplo (Python con rich.progress):
+```python
+from rich.progress import Progress
+
+with Progress() as progress:
+    task = progress.add_task("[cyan]Extrayendo...", total=100)
+    while not progress.finished:
+        progress.update(task, advance=10)
+```
+
+---
+
+## 66. Arte ASCII y Logos en CLI
+
+Incluir un encabezado con logo o nombre de la herramienta en texto grande (figlet/banner) al iniciar el programa para mejorar la identidad visual:
+
+- **Python**: `pyfiglet` o `banner`
+- **Node.js**: `figlet` o `cli-banner`
+
+Ejemplo (Python con pyfiglet):
+```python
+from pyfiglet import Figlet
+f = Figlet(font='slant')
+print(f.renderText('Mod Maker'))
+```
+
+---
+
+## 67. Menús interactivos en CLI
+
+Ofrecer menús con flechas para seleccionar opciones en lugar de obligar al usuario a recordar todos los comandos y argumentos:
+
+- **Python**: `questionary` o `InquirerPy`
+- **Node.js**: `inquirer`
+
+Ejemplo (Python con questionary):
+```python
+import questionary
+
+opcion = questionary.select(
+    "¿Qué deseas hacer?",
+    choices=["Crear mod", "Extraer mod", "Reconstruir mod", "Salir"]
+).ask()
+```
+
+---
+
 ## Fin del sistema
 
 Este documento define el comportamiento general del agente de ingeniería de software.
